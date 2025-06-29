@@ -1,0 +1,111 @@
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
+import { clubService } from '../services/api';
+import { Club } from '../types/Club';
+import ClubCard from './ClubCard';
+
+const HomePage: React.FC = () => {
+  const [clubs, setClubs] = useState<Club[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+  const [clubCount, setClubCount] = useState<number>(0);
+
+  useEffect(() => {
+    loadClubs();
+    loadClubCount();
+  }, []);
+
+  const loadClubs = async () => {
+    try {
+      setLoading(true);
+      const data = await clubService.getAllClubs();
+      setClubs(data.slice(0, 6)); // 最新6件のみ表示
+      setError('');
+    } catch (err) {
+      setError('部活動の読み込みに失敗しました');
+      console.error('Error loading clubs:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadClubCount = async () => {
+    try {
+      const count = await clubService.getClubCount();
+      setClubCount(count);
+    } catch (err) {
+      console.error('Error loading club count:', err);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Container>
+        <div className="text-center py-5">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">読み込み中...</span>
+          </div>
+        </div>
+      </Container>
+    );
+  }
+
+  return (
+    <Container>
+      <Row className="mb-4">
+        <Col>
+          <h1 className="text-center mb-4">部活動検索システム</h1>
+          <Alert variant="info" className="text-center">
+            登録部活動数: <strong>{clubCount}</strong>件
+          </Alert>
+        </Col>
+      </Row>
+
+      {error && (
+        <Row className="mb-4">
+          <Col>
+            <Alert variant="danger">{error}</Alert>
+          </Col>
+        </Row>
+      )}
+
+      <Row className="mb-4">
+        <Col>
+          <Card>
+            <Card.Body>
+              <Card.Title>システム概要</Card.Title>
+              <Card.Text>
+                このシステムでは、日本語のベクトル検索技術を使用して部活動を効率的に検索できます。
+                部活動名、説明、活動内容、実績などから関連する部活動を見つけることができます。
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row className="mb-4">
+        <Col>
+          <h2>最新の部活動</h2>
+        </Col>
+      </Row>
+
+      <Row>
+        {clubs.length === 0 ? (
+          <Col>
+            <Alert variant="warning">
+              部活動データがありません。データアップロードページからCSVファイルをアップロードしてください。
+            </Alert>
+          </Col>
+        ) : (
+          clubs.map((club) => (
+            <Col key={club.id} lg={4} md={6} className="mb-3">
+              <ClubCard club={club} />
+            </Col>
+          ))
+        )}
+      </Row>
+    </Container>
+  );
+};
+
+export default HomePage;

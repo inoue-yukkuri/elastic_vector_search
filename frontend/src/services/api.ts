@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Product } from '../types/Product';
+import { Club } from '../types/Club';
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
@@ -10,58 +10,70 @@ const api = axios.create({
   },
 });
 
-export const productService = {
-  // 全商品を取得
-  getAllProducts: async (): Promise<Product[]> => {
-    const response = await api.get<Product[]>('/products');
+export const clubService = {
+  // 全部活動を取得
+  getAllClubs: async (): Promise<Club[]> => {
+    const response = await api.get<Club[]>('/clubs');
     return response.data;
   },
 
-  // 商品を検索
-  searchProducts: async (query: string): Promise<Product[]> => {
-    const response = await api.get<Product[]>(`/products/search?query=${encodeURIComponent(query)}`);
-    return response.data;
-  },
-
-  // 名前で検索
-  searchByName: async (name: string): Promise<Product[]> => {
-    const response = await api.get<Product[]>(`/products/search/name?name=${encodeURIComponent(name)}`);
-    return response.data;
-  },
-
-  // 説明で検索
-  searchByDescription: async (description: string): Promise<Product[]> => {
-    const response = await api.get<Product[]>(`/products/search/description?description=${encodeURIComponent(description)}`);
+  // 部活動を検索
+  searchClubs: async (query: string): Promise<Club[]> => {
+    const response = await api.get<Club[]>(`/clubs/search?query=${encodeURIComponent(query)}`);
     return response.data;
   },
 
   // カテゴリで検索
-  searchByCategory: async (category: string): Promise<Product[]> => {
-    const response = await api.get<Product[]>(`/products/search/category?category=${encodeURIComponent(category)}`);
+  searchByCategory: async (category: string): Promise<Club[]> => {
+    const response = await api.get<Club[]>(`/clubs/search/category?category=${encodeURIComponent(category)}`);
     return response.data;
   },
 
-  // 価格範囲で検索
-  searchByPriceRange: async (minPrice: number, maxPrice: number): Promise<Product[]> => {
-    const response = await api.get<Product[]>(`/products/search/price?minPrice=${minPrice}&maxPrice=${maxPrice}`);
+  // 学校で検索
+  searchBySchool: async (school: string): Promise<Club[]> => {
+    const response = await api.get<Club[]>(`/clubs/search/school?school=${encodeURIComponent(school)}`);
     return response.data;
   },
 
-  // 商品を作成
-  createProduct: async (product: Product): Promise<Product> => {
-    const response = await api.post<Product>('/products', product);
+  // 学年で検索
+  searchByGrade: async (grade: string): Promise<Club[]> => {
+    const response = await api.get<Club[]>(`/clubs/search/grade?grade=${encodeURIComponent(grade)}`);
     return response.data;
   },
 
-  // 商品を更新
-  updateProduct: async (id: string, product: Product): Promise<Product> => {
-    const response = await api.put<Product>(`/products/${id}`, product);
+  // タグで検索
+  searchByTag: async (tag: string): Promise<Club[]> => {
+    const response = await api.get<Club[]>(`/clubs/search/tag?tag=${encodeURIComponent(tag)}`);
     return response.data;
   },
 
-  // 商品を削除
-  deleteProduct: async (id: string): Promise<void> => {
-    await api.delete(`/products/${id}`);
+  // 活動状況で検索
+  searchByActivityStatus: async (isActive: boolean): Promise<Club[]> => {
+    const response = await api.get<Club[]>(`/clubs/search/active?isActive=${isActive}`);
+    return response.data;
+  },
+
+  // 部員数範囲で検索
+  searchByMemberCountRange: async (minCount: number, maxCount: number): Promise<Club[]> => {
+    const response = await api.get<Club[]>(`/clubs/search/members?minCount=${minCount}&maxCount=${maxCount}`);
+    return response.data;
+  },
+
+  // 部活動を作成
+  createClub: async (club: Club): Promise<Club> => {
+    const response = await api.post<Club>('/clubs', club);
+    return response.data;
+  },
+
+  // 部活動を更新
+  updateClub: async (id: string, club: Club): Promise<Club> => {
+    const response = await api.put<Club>(`/clubs/${id}`, club);
+    return response.data;
+  },
+
+  // 部活動を削除
+  deleteClub: async (id: string): Promise<void> => {
+    await api.delete(`/clubs/${id}`);
   },
 
   // CSVファイルをインポート
@@ -69,7 +81,7 @@ export const productService = {
     const formData = new FormData();
     formData.append('file', file);
 
-    const response = await api.post<string>('/products/import', formData, {
+    const response = await api.post<string>('/clubs/import', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -77,9 +89,9 @@ export const productService = {
     return response.data;
   },
 
-  // 商品数を取得
-  getProductCount: async (): Promise<number> => {
-    const response = await api.get<number>('/products/count');
+  // 部活動数を取得
+  getClubCount: async (): Promise<number> => {
+    const response = await api.get<number>('/clubs/count');
     return response.data;
   },
 };

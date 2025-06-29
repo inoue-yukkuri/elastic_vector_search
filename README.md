@@ -1,20 +1,24 @@
-# Elasticsearch 全文検索デモ
+# 部活動検索システム
 
-Spring Boot、Elasticsearch、Reactを使用した全文検索デモアプリケーションです。
+Spring Boot、Elasticsearch、Reactを使用した日本語ベクトル検索対応の部活動検索システムです。
 
 ## 構成
 
-- **Backend**: Spring Boot 3.2.0 + Elasticsearch 8.11.0
-- **Frontend**: React 18 + TypeScript
+- **Backend**: Spring Boot 3.2.0 + Elasticsearch 8.11.0 + Lombok
+- **Frontend**: React 18 + TypeScript + Bootstrap
 - **Database**: Elasticsearch
 - **Container**: Docker Compose
+- **日本語検索**: Kuromoji（形態素解析）
 
 ## 機能
 
-- CSVファイルからの商品データインポート
-- 全文検索（商品名、説明、カテゴリ）
-- リアルタイム検索結果表示
-- レスポンシブなUI
+- 日本語形態素解析によるベクトル検索
+- CSVファイルからの部活動データインポート
+- カテゴリ別、学校別、学年別検索
+- タグ検索
+- 部員数範囲検索
+- 活動状況フィルタリング
+- レスポンシブなUI（Bootstrap）
 
 ## セットアップ
 
@@ -42,48 +46,82 @@ docker-compose up --build
 ### 1. データのインポート
 
 1. ブラウザで http://localhost:3000 にアクセス
-2. 「CSVファイルをアップロード」セクションで `sample_products.csv` を選択
-3. 「アップロード」ボタンをクリック
+2. 「データアップロード」メニューをクリック
+3. `sample_clubs.csv` を選択してアップロード
 
-### 2. 検索
+### 2. 検索機能
 
-1. 検索ボックスにキーワードを入力
-2. 「検索」ボタンをクリックまたはEnterキーを押下
-3. 商品名、説明、カテゴリで全文検索が実行されます
+1. 「検索」メニューをクリック
+2. 検索ボックスにキーワードを入力
+3. 日本語のベクトル検索が実行されます
 
-### 3. 全件表示
+### 3. 検索例
 
-「全件表示」ボタンをクリックすると、すべての商品が表示されます。
+- 「サッカー」→ サッカー部、運動系の部活動
+- 「音楽」→ 吹奏楽部、音楽系の部活動
+- 「科学」→ 科学部、研究系の部活動
+- 「運動」→ スポーツ系の部活動全般
 
 ## API エンドポイント
 
-### 商品関連
+### 部活動関連
 
-- `GET /api/products` - 全商品取得
-- `GET /api/products/{id}` - 商品詳細取得
-- `POST /api/products` - 商品作成
-- `PUT /api/products/{id}` - 商品更新
-- `DELETE /api/products/{id}` - 商品削除
+- `GET /api/clubs` - 全部活動取得
+- `GET /api/clubs/{id}` - 部活動詳細取得
+- `POST /api/clubs` - 部活動作成
+- `PUT /api/clubs/{id}` - 部活動更新
+- `DELETE /api/clubs/{id}` - 部活動削除
 
 ### 検索関連
 
-- `GET /api/products/search?query={query}` - 全文検索
-- `GET /api/products/search/name?name={name}` - 名前検索
-- `GET /api/products/search/description?description={description}` - 説明検索
-- `GET /api/products/search/category?category={category}` - カテゴリ検索
-- `GET /api/products/search/price?minPrice={min}&maxPrice={max}` - 価格範囲検索
+- `GET /api/clubs/search?query={query}` - 全文検索（日本語対応）
+- `GET /api/clubs/search/category?category={category}` - カテゴリ検索
+- `GET /api/clubs/search/school?school={school}` - 学校検索
+- `GET /api/clubs/search/grade?grade={grade}` - 学年検索
+- `GET /api/clubs/search/tag?tag={tag}` - タグ検索
+- `GET /api/clubs/search/active?isActive={isActive}` - 活動状況検索
+- `GET /api/clubs/search/members?minCount={min}&maxCount={max}` - 部員数範囲検索
 
 ### インポート関連
 
-- `POST /api/products/import` - CSVファイルインポート
-- `GET /api/products/count` - 商品数取得
+- `POST /api/clubs/import` - CSVファイルインポート
+- `GET /api/clubs/count` - 部活動数取得
 
 ## CSVファイル形式
 
 ```csv
-name,description,category,price,stock
-商品名,商品説明,カテゴリ,価格,在庫数
+name,description,category,school,grade,activities,tags,memberCount,meetingTime,meetingPlace,achievements,isActive
+部活動名,説明,カテゴリ,学校名,学年,活動内容,タグ,部員数,活動時間,活動場所,実績,活動状況
 ```
+
+## 技術スタック
+
+### Backend
+- Spring Boot 3.2.0
+- Spring Data Elasticsearch
+- Lombok
+- Kuromoji（日本語形態素解析）
+- OpenCSV
+- Maven
+
+### Frontend
+- React 18
+- TypeScript
+- Bootstrap 5
+- React Router DOM
+- Axios
+
+### Infrastructure
+- Docker
+- Docker Compose
+- Elasticsearch 8.11.0
+
+## 日本語検索の特徴
+
+- **Kuromoji形態素解析**: 日本語テキストを適切に分割
+- **ベクトル検索**: 意味的な類似性を考慮した検索
+- **キーワード抽出**: 名詞、動詞、形容詞を自動抽出
+- **検索クエリ最適化**: 入力されたクエリを最適化して検索精度を向上
 
 ## 開発
 
@@ -101,25 +139,6 @@ cd frontend
 npm install
 npm start
 ```
-
-## 技術スタック
-
-### Backend
-- Spring Boot 3.2.0
-- Spring Data Elasticsearch
-- OpenCSV
-- Maven
-
-### Frontend
-- React 18
-- TypeScript
-- Axios
-- CSS3
-
-### Infrastructure
-- Docker
-- Docker Compose
-- Elasticsearch 8.11.0
 
 ## ライセンス
 

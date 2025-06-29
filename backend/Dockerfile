@@ -2,13 +2,20 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-# Mavenの依存関係をコピー
+# Mavenをインストール
+RUN apt-get update && apt-get install -y maven
+
+# pom.xmlをコピー
 COPY pom.xml .
+
+# 依存関係をダウンロード（リトライを追加）
+RUN mvn dependency:go-offline -B -U
+
+# ソースコードをコピー
 COPY src ./src
 
-# Mavenをインストールしてビルド
-RUN apt-get update && apt-get install -y maven
-RUN mvn clean package -DskipTests
+# ビルド（テストをスキップ、詳細ログを出力）
+RUN mvn clean compile -B -X && mvn package -DskipTests -B
 
 # JARファイルを実行
-CMD ["java", "-jar", "target/elasticsearch-demo-1.0.0.jar"]
+CMD ["java", "-jar", "target/club-search-1.0.0.jar"]
