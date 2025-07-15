@@ -46,6 +46,10 @@ public class ClubService {
         clubRepository.deleteById(id);
     }
 
+    public void deleteAllClubs() {
+        clubRepository.deleteAll();
+    }
+
     /**
      * 全文検索
      */

@@ -86,6 +86,18 @@ function App() {
     }
   };
 
+  // 全データ削除
+  const handleDeleteAll = async () => {
+    if (!window.confirm('本当に全ての部活動データを削除しますか？')) return;
+    try {
+      await fetch('http://localhost:8080/api/clubs/all', { method: 'DELETE' });
+      setClubs([]);
+    } catch (error) {
+      alert('全件削除に失敗しました');
+      console.error('Error deleting all clubs:', error);
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -140,9 +152,14 @@ function App() {
         {activeTab === 'list' && (
           <div className="list-section">
             <h2>データ一覧 ({clubs.length}件)</h2>
-            <button onClick={fetchClubs} className="refresh-button">
-              更新
-            </button>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+              <button onClick={fetchClubs} className="refresh-button">
+                更新
+              </button>
+              <button onClick={handleDeleteAll} className="btn btn-danger">
+                全データ削除
+              </button>
+            </div>
             <div className="clubs-grid">
               {clubs.map((club) => (
                 <div key={club.id} className="club-card">

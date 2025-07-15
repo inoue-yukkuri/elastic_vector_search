@@ -38,6 +38,22 @@ const HomePage: React.FC = () => {
     }
   };
 
+  const handleDeleteAll = async () => {
+    if (!window.confirm('本当に全ての部活動データを削除しますか？')) return;
+    try {
+      setLoading(true);
+      await clubService.deleteAllClubs();
+      setClubs([]);
+      setClubCount(0);
+      setError('');
+    } catch (err) {
+      setError('全件削除に失敗しました');
+      console.error('Error deleting all clubs:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <Container>
@@ -86,6 +102,14 @@ const HomePage: React.FC = () => {
       <Row className="mb-4">
         <Col>
           <h2>最新の部活動</h2>
+          <div className="d-flex align-items-center mb-2">
+            <button className="btn btn-primary me-2" onClick={loadClubs}>
+              更新
+            </button>
+            <button className="btn btn-danger" onClick={handleDeleteAll}>
+              全データ削除
+            </button>
+          </div>
         </Col>
       </Row>
 

@@ -76,6 +76,11 @@ export const clubService = {
     await api.delete(`/clubs/${id}`);
   },
 
+  // 全部活動を削除
+  deleteAllClubs: async (): Promise<void> => {
+    await api.delete('/clubs/all');
+  },
+
   // CSVファイルをインポート
   importFromCsv: async (file: File): Promise<string> => {
     const formData = new FormData();

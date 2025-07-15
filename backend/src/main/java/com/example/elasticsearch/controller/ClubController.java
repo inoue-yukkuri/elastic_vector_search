@@ -57,6 +57,11 @@ public class ClubController {
             return ResponseEntity.notFound().build();
         }
     }
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> deleteAllClubs() {
+        clubService.deleteAllClubs();
+        return ResponseEntity.ok().build();
+    }
     @GetMapping("/search")
     public ResponseEntity<List<Club>> searchClubs(@RequestParam String query) {
         System.out.println("Searching clubs with query: " + query);
