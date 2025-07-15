@@ -34,6 +34,8 @@ public class Club {
     private String achievements;
     @Field(type = FieldType.Boolean)
     private Boolean isActive;
+    @Field(type = FieldType.Dense_Vector, dims = 384) // 384はMiniLMの次元数。モデル変更時は要調整
+    private List<Double> embedding;
 
     // 引数なしコンストラクタ
     public Club() {}
@@ -82,4 +84,6 @@ public class Club {
     public void setAchievements(String achievements) { this.achievements = achievements; }
     public Boolean getIsActive() { return isActive; }
     public void setIsActive(Boolean isActive) { this.isActive = isActive; }
+    public List<Double> getEmbedding() { return embedding; }
+    public void setEmbedding(List<Double> embedding) { this.embedding = embedding; }
 }
