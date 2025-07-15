@@ -7,7 +7,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [clubs, setClubs] = useState([]);
-  const [activeTab, setActiveTab] = useState('upload'); // 'upload' or 'list'
+  const [activeTab, setActiveTab] = useState('search'); // 'upload' or 'list' or 'search'
 
   useEffect(() => {
     fetchClubs();

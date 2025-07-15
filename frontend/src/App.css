@@ -1,8 +1,8 @@
-.App {
-  text-align: center;
+body, .App {
+  background: #fff;
+  color: #222;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  text-align: center;
 }
 
 .App-logo {
@@ -17,47 +17,58 @@
 }
 
 .App-header {
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 20px;
+  background: #1976d2;
+  padding: 10px 0 8px 0;
   margin-bottom: 20px;
+  border-bottom: none;
 }
 
 .App-header h1 {
   margin: 0;
-  font-size: 2.5rem;
-  font-weight: 300;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.05em;
 }
 
 .nav-tabs {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 0;
   margin-bottom: 30px;
   padding: 0 20px;
+  border-bottom: 2px solid #e3f2fd;
+  background: transparent;
 }
 
 .nav-tab {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 25px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #1976d2;
+  padding: 10px 32px 8px 32px;
+  border-radius: 8px 8px 0 0;
   cursor: pointer;
   font-size: 1rem;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  font-weight: 500;
+  margin: 0 2px;
+  transition: all 0.2s;
+  outline: none;
+  position: relative;
+  z-index: 1;
 }
 
 .nav-tab:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
+  background: #e3f2fd;
+  color: #1565c0;
 }
 
 .nav-tab.active {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: white;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  color: #1976d2;
+  border-bottom: 2.5px solid #1976d2;
+  font-weight: 700;
+  z-index: 2;
 }
 
 .App-main {
@@ -67,18 +78,19 @@
 }
 
 .upload-section, .list-section, .search-section {
-  background: rgba(255, 255, 255, 0.1);
+  background: #f5f7fa;
   border-radius: 15px;
   padding: 30px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid #e3f2fd;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.04);
 }
 
 .upload-section h2, .list-section h2, .search-section h2 {
   margin-top: 0;
   margin-bottom: 25px;
   font-size: 1.8rem;
-  font-weight: 300;
+  font-weight: 400;
+  color: #1976d2;
 }
 
 .upload-form, .search-form {
@@ -91,46 +103,45 @@
 }
 
 .file-input {
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
+  background: #fff;
+  border: 1px solid #90caf9;
   padding: 12px;
   border-radius: 8px;
-  color: #333;
+  color: #222;
   font-size: 1rem;
   min-width: 250px;
 }
 
 .search-input {
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
+  background: #fff;
+  border: 1px solid #90caf9;
   padding: 12px 20px;
   border-radius: 25px;
-  color: #333;
+  color: #222;
   font-size: 1rem;
   min-width: 300px;
   outline: none;
 }
 
 .upload-button, .search-button, .refresh-button {
-  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-  color: white;
+  background: linear-gradient(90deg, #2196f3 0%, #03a9f4 100%);
+  color: #fff;
   border: none;
   padding: 12px 30px;
   border-radius: 25px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.08);
 }
 
 .upload-button:hover, .search-button:hover, .refresh-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(90deg, #1976d2 0%, #4fc3f7 100%);
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.15);
 }
 
 .refresh-button {
-  background: linear-gradient(45deg, #4834d4, #686de0);
   margin-bottom: 20px;
 }
 
@@ -142,15 +153,15 @@
 }
 
 .status.success {
-  background: rgba(46, 204, 113, 0.2);
-  border: 1px solid rgba(46, 204, 113, 0.5);
-  color: #2ecc71;
+  background: #e3fcec;
+  border: 1px solid #81c784;
+  color: #388e3c;
 }
 
 .status.error {
-  background: rgba(231, 76, 60, 0.2);
-  border: 1px solid rgba(231, 76, 60, 0.5);
-  color: #e74c3c;
+  background: #ffebee;
+  border: 1px solid #e57373;
+  color: #c62828;
 }
 
 .clubs-grid {
@@ -161,39 +172,39 @@
 }
 
 .club-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: #fff;
   border-radius: 12px;
   padding: 20px;
   text-align: left;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
+  border: 1px solid #e3f2fd;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.06);
 }
 
 .club-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.10);
+  background: #e3f2fd;
 }
 
 .club-card h3 {
   margin-top: 0;
   margin-bottom: 15px;
-  color: #fff;
+  color: #1976d2;
   font-size: 1.3rem;
   font-weight: 500;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 2px solid #90caf9;
   padding-bottom: 8px;
 }
 
 .club-card p {
   margin: 8px 0;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .club-card strong {
-  color: #ffd700;
+  color: #1976d2;
   font-weight: 500;
 }
 
@@ -201,33 +212,30 @@
   margin-top: 30px;
   margin-bottom: 20px;
   font-size: 1.4rem;
-  font-weight: 300;
-  color: #ffd700;
+  font-weight: 400;
+  color: #1976d2;
 }
 
 @media (max-width: 768px) {
   .nav-tabs {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    border-bottom: 2px solid #e3f2fd;
   }
-
   .nav-tab {
-    width: 200px;
+    width: auto;
+    padding: 10px 12px 8px 12px;
+    font-size: 0.95rem;
   }
-
   .upload-form, .search-form {
     flex-direction: column;
   }
-
   .file-input, .search-input {
     min-width: 100%;
   }
-
   .clubs-grid {
     grid-template-columns: 1fr;
   }
-
   .App-header h1 {
-    font-size: 2rem;
+    font-size: 1.1rem;
   }
 }
