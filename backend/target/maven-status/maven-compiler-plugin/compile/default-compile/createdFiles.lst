@@ -1,6 +1,0 @@
-com/example/elasticsearch/model/Club.class
-com/example/elasticsearch/service/ClubService.class
-com/example/elasticsearch/repository/ClubRepository.class
-com/example/elasticsearch/controller/ClubController.class
-com/example/elasticsearch/ElasticsearchDemoApplication.class
-com/example/elasticsearch/config/ElasticsearchConfig.class
