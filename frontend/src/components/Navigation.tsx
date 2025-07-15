@@ -6,6 +6,7 @@ const Navigation: React.FC = () => {
   const location = useLocation();
 
   return (
+    
     <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
       <Container>
         <Navbar.Brand as={Link} to="/">
